@@ -9,11 +9,11 @@ int D1 = 4; //displayer pin of digit 1
 int D2 = 5; //displayer pin of digit 2
 int D3 = 6; //displayer pin of digit 3
 int D4 = 7; //displayer pin of digit 4
-int point = 11;
-int delai = 3;
+int dot = 11;
+int timeDelay = 3;
 int IrReceiverPin = 12;  // pin of the IR receiver 
-int minPlus = 0;
-int heurePlus = 0;
+int addMin = 0;
+int addHour = 0;
 
 DS1307 clock;   // instance of clock
 IRrecv irrecv(IrReceiverPin);   // instance of irrecv
@@ -29,7 +29,7 @@ void setup() {
   pinMode(D2,OUTPUT);
   pinMode(D3,OUTPUT);
   pinMode(D4,OUTPUT);
-  pinMode(point,OUTPUT);
+  pinMode(dot,OUTPUT);
   
   Serial.begin(9600);
   clock.begin();
@@ -54,38 +54,38 @@ void loop()
     Serial.println(results.value,HEX);
     switch(results.value) {
       case 0xFF629D:
-        heurePlus += 1;
-        Serial.println("heures augmentée");
+        addHour += 1;
+        Serial.println("hours increased");
         break;
         
       case 0xFFA857:
-        heurePlus -= 1;
-        Serial.println("heures diminuée");
+        addHour -= 1;
+        Serial.println("hours reduced");
         break;
         
       case 0xFFC23D:
-        minPlus += 1;
-        Serial.println("minutes augmentée");
+        addMin += 1;
+        Serial.println("minutes increased");
         break;
         
       case 0xFF22DD:
-        minPlus -= 1;
-        Serial.println("minutes diminuée");
+        addMin -= 1;
+        Serial.println("minutes reduced");
         break;
         
       default:
         Serial.println("commande non reconnue");
         break;
     }
-    if(minPlus == -60) {
-      minPlus = 0;
-      heurePlus -= 1;
-    } else if(minPlus == 60) {
-      minPlus = 0;
-      heurePlus += 1;
+    if(addMin == -60) {
+      addMin = 0;
+      addHour -= 1;
+    } else if(addMin == 60) {
+      addMin = 0;
+      addHour += 1;
     }
-    if(heurePlus == -24 or heurePlus == 24) {
-      heurePlus = 0;
+    if(addHour == -24 or addHour == 24) {
+      addHour = 0;
     }
     irrecv.resume();
   }
@@ -101,46 +101,46 @@ void loop()
   digitalWrite(D2,HIGH);
   digitalWrite(D3,HIGH);
   digitalWrite(D4,HIGH);
-  digitalWrite(point,LOW);
+  digitalWrite(dot,LOW);
 
-  int heures = clock.hour + heurePlus;
-  int minutes = clock.minute + minPlus;
+  int hours = clock.hour + addHour;
+  int minutes = clock.minute + addMin;
 
   if(minutes < 0) {
     minutes = 60 + minutes;
-    heures -= 1;
+    hours -= 1;
   } else if(minutes >= 60) {
     minutes = minutes - 60;
-    heures += 1;
+    hours += 1;
   }
-  if(heures < 0) {
-    heures = 24 + heures;
-  } else if(heures >= 24) {
-    heures = heures - 24;
+  if(hours < 0) {
+    hours = 24 + hours;
+  } else if(hours >= 24) {
+    hours = hours - 24;
   }
   
-  int b2 = heures % 10;
-  int b1 = (heures - b2) / 10;
+  int b2 = hours % 10;
+  int b1 = (hours - b2) / 10;
   int b4 = minutes % 10;
   int b3 = (minutes - b4) / 10;
   
   Display(b1);
-  delay(delai);
+  delay(timeDelay);
   
   digitalWrite(D1,HIGH);
   digitalWrite(D2,LOW);
-  digitalWrite(point,HIGH);
+  digitalWrite(dot,HIGH);
   Display(b2);
-  delay(delai);
+  delay(timeDelay);
   
-  digitalWrite(point,LOW);
+  digitalWrite(dot,LOW);
   digitalWrite(D2,HIGH);
   digitalWrite(D3,LOW);
   Display(b3);
-  delay(delai);
+  delay(timeDelay);
   
   digitalWrite(D3,HIGH);
   digitalWrite(D4,LOW);
   Display(b4);
-  delay(delai);
+  delay(timeDelay);
 }
