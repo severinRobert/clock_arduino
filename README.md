@@ -16,7 +16,7 @@ This project is as simple as his title, just a clock display on a 4 Digital 7 Se
     <li>IRremote.h</li>
     <p>to manage the remote control</p>
     <li>Wire.h</li>
-    <p>allow you to communicate with SDA and SCL pins of the Arduino card (usefull for the RTC)</p> <a>here</a><p> you can see where is your SDA and SCL pins</p>
+    <p>allow you to communicate with SDA and SCL pins of the Arduino card (usefull for the RTC)</p><p>you can see where is your SDA and SCL pins here : https://www.arduino.cc/en/reference/wire</p>
     <li>DS1307.h</li>
     <p>to create an instance of clock object to get the hour</p>
   </ul>
