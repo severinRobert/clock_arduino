@@ -8,7 +8,7 @@ This project is as simple as his title, just a clock display on a 4 Digital 7 Se
     <li>4 Digital 7 Segment Display</li>
     <li>RTC, in my case I use a DS1307</li>
     <li>IR receiver module</li>
-    <li>Decoder(not essential but better to use less pins on arduino card), in my case I use a 74HC595 IC</li>
+    <li>Decoder (not essential but better to use less pins on arduino card), in my case I use a 74HC595 IC</li>
   </ul>
 
 <h2> Libraries </h2>
@@ -16,7 +16,7 @@ This project is as simple as his title, just a clock display on a 4 Digital 7 Se
     <li>IRremote.h</li>
     <p>to manage the remote control</p>
     <li>Wire.h</li>
-    <p>allow you to communicate with SDA and SCL pins of the Arduino card (usefull for the RTC)</p>
+    <p>allow you to communicate with SDA and SCL pins of the Arduino card (usefull for the RTC)</p> <a>here</a><p> you can see where is your SDA and SCL pins</p>
     <li>DS1307.h</li>
     <p>to create an instance of clock object to get the hour</p>
   </ul>
